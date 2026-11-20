@@ -317,6 +317,42 @@
     .project:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0 #000; }
     .project { transition: transform 0.05s steps(2); }
 
+    /* Project folders: hover lifts the flap and the project files float out; click filters the cards */
+    .folders { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 28px; padding-top: 70px; margin-bottom: 36px; }
+    .folder { position: relative; height: 110px; background: none; border: 0; cursor: pointer; font: inherit; }
+    .folder .back { position: absolute; inset: 14px 0 0 0; background: var(--fd); border: 4px solid #000; }
+    .folder .back::before { content: ""; position: absolute; left: -4px; top: -18px; width: 45%; height: 18px; background: var(--fd); border: 4px solid #000; border-bottom: 0; }
+    .folder .file {
+      position: absolute; left: 18%; bottom: 20px; width: 64%; height: 74px; padding: 8px 4px 0;
+      background: #f2ecd9; border: 3px solid #000; box-shadow: 3px 3px 0 #000;
+      font-family: "Press Start 2P", monospace; font-size: 7px; color: #14102a; text-align: center;
+      transition: transform 0.35s steps(4);
+    }
+    .folder .file::after { content: ""; position: absolute; left: 8px; right: 8px; top: 22px; height: 30px; background: repeating-linear-gradient(180deg, #b9b0cf 0 3px, transparent 3px 8px); }
+    .folder .front {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 74px; display: grid; place-items: center;
+      background: var(--fc); border: 4px solid #000; box-shadow: inset 0 4px 0 rgba(255,255,255,0.35), 6px 6px 0 #000;
+      font-family: "Press Start 2P", monospace; font-size: 10px; color: #14102a;
+      transform-origin: bottom; transition: transform 0.25s steps(3);
+    }
+    .folder .front small { display: block; font-family: "VT323", monospace; font-size: 18px; }
+    .folder:hover .front, .folder:focus-visible .front, .folder[aria-pressed="true"] .front { transform: perspective(300px) rotateX(-28deg); }
+    .folder:hover .file, .folder:focus-visible .file, .folder[aria-pressed="true"] .file {
+      transform: translate(var(--x, 0), -64px) rotate(var(--r, 0deg));
+      animation: bob 1s steps(2) infinite; animation-delay: var(--d, 0s);
+    }
+    @keyframes bob { 50% { translate: 0 -6px; } }
+    .folder:focus-visible { outline: 3px dashed var(--gold); outline-offset: 6px; }
+    .folder[aria-pressed="true"] .front { color: var(--gold); background: #14102a; }
+    .f-all { --fc: var(--gold); --fd: #b8861a; }
+    .f-games { --fc: #ff7ab6; --fd: #b8467d; }
+    .f-ai { --fc: #6fd3ff; --fd: #2f8fb8; }
+    .f-web { --fc: #4a9a4a; --fd: #2e6b35; }
+    .folder-hint { text-align: center; color: var(--muted); animation: twinkle 2.4s steps(2) infinite; }
+    .folder-hint[hidden] { display: none; }
+    .project.reveal { animation: pop 0.3s steps(3); }
+    @keyframes pop { from { transform: translateY(16px) scale(0.92); opacity: 0; } }
+
     /* Timeline */
     .timeline { position: relative; padding-left: 30px; }
     .timeline::before {
@@ -699,22 +735,47 @@
   <section id="projects">
     <div class="container">
       <h2>PROJECTS</h2>
+      <div class="folders" role="group" aria-label="Project categories">
+        <button class="folder f-all" data-cat="all" aria-pressed="false">
+          <span class="back"></span>
+          <span class="file" style="--x:-34px;--r:-14deg">SHOOTER</span>
+          <span class="file" style="--r:2deg;--d:-0.3s">TUTU</span>
+          <span class="file" style="--x:34px;--r:14deg;--d:-0.6s">PCC</span>
+          <span class="front">ALL<small>3 quests</small></span>
+        </button>
+        <button class="folder f-games" data-cat="games" aria-pressed="false">
+          <span class="back"></span>
+          <span class="file" style="--r:-6deg">SHOOTER</span>
+          <span class="front">GAMES<small>1 quest</small></span>
+        </button>
+        <button class="folder f-ai" data-cat="ai" aria-pressed="false">
+          <span class="back"></span>
+          <span class="file" style="--r:6deg">TUTU BOT</span>
+          <span class="front">AI APPS<small>1 quest</small></span>
+        </button>
+        <button class="folder f-web" data-cat="web" aria-pressed="false">
+          <span class="back"></span>
+          <span class="file" style="--r:-6deg">PCC FOOD</span>
+          <span class="front">WEB APPS<small>1 quest</small></span>
+        </button>
+      </div>
+      <p class="folder-hint" id="folder-hint">▶ Click a folder to open it and see the quests inside.</p>
       <div class="grid">
-        <article class="panel project">
+        <article class="panel project" data-cat="games">
           <img class="shot" src="images/space-shooter.png" alt="Space Shooter start screen" />
           <h3>SPACE SHOOTER</h3>
           <p>A browser arcade space shooter built with TypeScript and esbuild. Move, shoot, switch to new guns, and raise an energy shield to survive the waves.</p>
           <div class="tags"><span>TypeScript</span><span>GAME</span><span>esbuild</span></div>
           <a class="btn alt" href="https://github.com/pjayyy96/space_Shooter" target="_blank" rel="noopener">GITHUB</a>
         </article>
-        <article class="panel project">
+        <article class="panel project" data-cat="ai">
           <img class="shot" style="object-fit: contain; background: #f5ede0" src="images/tutu-chatbot.png" alt="Tutu's Sweet Shop chatbot window open" />
           <h3>TUTU'S SWEET SHOP CHATBOT</h3>
           <p>An AI chatbot for a sweet shop. A Vite and TypeScript frontend talks to an Express backend that connects to Ollama, with a product list and the shop's database behind it.</p>
           <div class="tags"><span>TypeScript</span><span>Vite</span><span>Express</span><span>Ollama</span></div>
           <a class="btn alt" href="https://github.com/pjayyy96/ChatBot_Tutus" target="_blank" rel="noopener">GITHUB</a>
         </article>
-        <article class="panel project">
+        <article class="panel project" data-cat="web">
           <img class="shot" src="images/pcc-food-marketplace.png" alt="PCC Food Marketplace home page" />
           <h3>PCC FOOD MARKETPLACE</h3>
           <p>A practice online store for Laie residents to browse PCC food, order for pickup, and let admins manage the menu. It uses demo items and simulated payments only.</p>
@@ -947,6 +1008,26 @@
       princess.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleBubble(); }
       });
+    })();
+
+    // Project folders: cards start hidden; click a folder to show its projects ("all" shows every card), click it again to close
+    (() => {
+      const folders = document.querySelectorAll('.folder');
+      const cards = document.querySelectorAll('.project[data-cat]');
+      const hint = document.getElementById('folder-hint');
+      cards.forEach((card) => { card.hidden = true; }); // hidden from JS so the cards still show if scripts are off
+      folders.forEach((folder) => folder.addEventListener('click', () => {
+        const closing = folder.getAttribute('aria-pressed') === 'true';
+        const cat = closing ? null : folder.dataset.cat;
+        folders.forEach((f) => f.setAttribute('aria-pressed', String(f === folder && !closing)));
+        hint.hidden = !closing;
+        cards.forEach((card) => {
+          card.hidden = !cat || (cat !== 'all' && card.dataset.cat !== cat);
+          card.classList.remove('reveal');
+          void card.offsetWidth; // restart the pop-in animation
+          if (!card.hidden) card.classList.add('reveal');
+        });
+      }));
     })();
   </script>
 </body>
