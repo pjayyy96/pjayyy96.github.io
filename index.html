@@ -199,9 +199,13 @@
       color: var(--gold);
     }
 
+    .skill-group h3 { color: var(--gold); margin-bottom: 16px; }
+
     /* Projects */
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
     .project p { color: var(--muted); }
+    .project p + p { margin-top: 10px; }
+    .project p strong { color: var(--gold); font-weight: normal; }
     .project .tags { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
     .project .btn { display: inline-block; margin-top: 16px; font-size: 9px; padding: 10px 12px; }
     .project .tags span {
@@ -691,15 +695,38 @@
   <section id="skills">
     <div class="container">
       <h2>SKILLS</h2>
-      <div class="skills">
-        <span class="skill">AI tools</span>
-        <span class="skill">Backend APIs</span>
-        <span class="skill">Frontend to cloud</span>
-        <span class="skill">Cloud databases</span>
-        <span class="skill">Communication</span>
-        <span class="skill">Analysis</span>
-        <span class="skill">Detail-oriented</span>
-        <span class="skill">+ more</span>
+      <div class="grid">
+        <div class="panel skill-group">
+          <h3>TECH</h3>
+          <div class="skills">
+            <span class="skill">React &amp; Next.js</span>
+            <span class="skill">Express APIs</span>
+            <span class="skill">Vite &amp; esbuild</span>
+            <span class="skill">Drizzle ORM</span>
+            <span class="skill">Neon DB</span>
+            <span class="skill">Vercel deploys</span>
+            <span class="skill">Browser games</span>
+            <span class="skill">Git &amp; GitHub</span>
+          </div>
+        </div>
+        <div class="panel skill-group">
+          <h3>AI</h3>
+          <div class="skills">
+            <span class="skill">Claude Code &amp; Codex</span>
+            <span class="skill">Local LLMs (Ollama)</span>
+            <span class="skill">Chatbot building</span>
+            <span class="skill">Connecting AI to data</span>
+            <span class="skill">Prompt engineering</span>
+          </div>
+        </div>
+        <div class="panel skill-group">
+          <h3>HUMAN</h3>
+          <div class="skills">
+            <span class="skill">Communication</span>
+            <span class="skill">Analysis</span>
+            <span class="skill">Detail-oriented</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -738,10 +765,11 @@
       <div class="folders" role="group" aria-label="Project categories">
         <button class="folder f-all" data-cat="all" aria-pressed="false">
           <span class="back"></span>
-          <span class="file" style="--x:-34px;--r:-14deg">SHOOTER</span>
-          <span class="file" style="--r:2deg;--d:-0.3s">TUTU</span>
-          <span class="file" style="--x:34px;--r:14deg;--d:-0.6s">PCC</span>
-          <span class="front">ALL<small>3 quests</small></span>
+          <span class="file" style="--x:-42px;--r:-16deg">SHOOTER</span>
+          <span class="file" style="--x:-14px;--r:-5deg;--d:-0.25s">TUTU</span>
+          <span class="file" style="--x:14px;--r:5deg;--d:-0.5s">PCC</span>
+          <span class="file" style="--x:42px;--r:16deg;--d:-0.75s">DAM</span>
+          <span class="front">ALL<small>4 quests</small></span>
         </button>
         <button class="folder f-games" data-cat="games" aria-pressed="false">
           <span class="back"></span>
@@ -750,8 +778,9 @@
         </button>
         <button class="folder f-ai" data-cat="ai" aria-pressed="false">
           <span class="back"></span>
-          <span class="file" style="--r:6deg">TUTU BOT</span>
-          <span class="front">AI APPS<small>1 quest</small></span>
+          <span class="file" style="--x:-20px;--r:-8deg">TUTU BOT</span>
+          <span class="file" style="--x:20px;--r:8deg;--d:-0.5s">PCC DAM</span>
+          <span class="front">AI APPS<small>2 quests</small></span>
         </button>
         <button class="folder f-web" data-cat="web" aria-pressed="false">
           <span class="back"></span>
@@ -764,23 +793,38 @@
         <article class="panel project" data-cat="games">
           <img class="shot" src="images/space-shooter.png" alt="Space Shooter start screen" />
           <h3>SPACE SHOOTER</h3>
-          <p>A browser arcade space shooter built with TypeScript and esbuild. Move, shoot, switch to new guns, and raise an energy shield to survive the waves.</p>
+          <p>I built a browser arcade space shooter in TypeScript and bundled it with esbuild. Players move, shoot, switch to new guns, and raise an energy shield to survive each wave.</p>
+          <p><strong>GOAL:</strong> Build a complete, playable game from scratch.</p>
+          <p><strong>LEARNED:</strong> How a game loop runs, how to detect collisions, and how to keep game state organized in TypeScript.</p>
           <div class="tags"><span>TypeScript</span><span>GAME</span><span>esbuild</span></div>
           <a class="btn alt" href="https://github.com/pjayyy96/space_Shooter" target="_blank" rel="noopener">GITHUB</a>
         </article>
         <article class="panel project" data-cat="ai">
           <img class="shot" style="object-fit: contain; background: #f5ede0" src="images/tutu-chatbot.png" alt="Tutu's Sweet Shop chatbot window open" />
           <h3>TUTU'S SWEET SHOP CHATBOT</h3>
-          <p>An AI chatbot for a sweet shop. A Vite and TypeScript frontend talks to an Express backend that connects to Ollama, with a product list and the shop's database behind it.</p>
+          <p>I created an AI chatbot for a sweet shop. My Vite and TypeScript chat window talks to an Express backend I wrote, which asks a local Ollama model and answers from the shop's product list and database.</p>
+          <p><strong>GOAL:</strong> Let customers find products and get answers without waiting for staff.</p>
+          <p><strong>LEARNED:</strong> How to connect a frontend, a backend API, and a local AI model, and how to ground the AI's answers in real shop data.</p>
           <div class="tags"><span>TypeScript</span><span>Vite</span><span>Express</span><span>Ollama</span></div>
           <a class="btn alt" href="https://github.com/pjayyy96/ChatBot_Tutus" target="_blank" rel="noopener">GITHUB</a>
         </article>
         <article class="panel project" data-cat="web">
           <img class="shot" src="images/pcc-food-marketplace.png" alt="PCC Food Marketplace home page" />
           <h3>PCC FOOD MARKETPLACE</h3>
-          <p>A practice online store for Laie residents to browse PCC food, order for pickup, and let admins manage the menu. It uses demo items and simulated payments only.</p>
+          <p>I built a practice online store where Laie residents browse PCC food and order for pickup, and admins manage the menu. It uses demo items and simulated payments only.</p>
+          <p><strong>GOAL:</strong> Build a full store end to end, from the customer's order to the admin's tools.</p>
+          <p><strong>LEARNED:</strong> Next.js and React, a typed database with Drizzle and Neon, and deploying a live site on Vercel.</p>
           <div class="tags"><span>Next.js</span><span>React</span><span>TypeScript</span><span>Drizzle</span><span>Neon DB</span></div>
           <a class="btn alt" href="https://onboarding2-pj-amazonfoodhouse.vercel.app" target="_blank" rel="noopener">LIVE DEMO</a>
+        </article>
+        <article class="panel project" data-cat="ai">
+          <img class="shot" src="images/pcc-dam.png" alt="PCC Photo Library home page: One Ohana, Sharing Aloha" />
+          <h3>PCC DIGITAL ASSET MANAGER</h3>
+          <p>I built a review queue that suggests photos for staff to hide: byte-identical duplicates (all but one copy of each) and "empty scene" shots, such as water-only photos with no people. Staff confirm or dismiss suggestions in bulk, and confirmed photos are hidden with the existing audited, undoable hide flag. Nothing is hidden automatically.</p>
+          <p>It reuses data the system already has (SHA-256 hashes, detected faces, AI tags), so no photo is re-processed, and only byte-identical files count as duplicates.</p>
+          <p><strong>GOAL:</strong> Keep duplicate and empty photos away from viewers while every final decision stays with staff.</p>
+          <p><strong>LEARNED:</strong> How to add a feature to a large production system safely: reuse existing data, and make every change reviewed, audited, and undoable.</p>
+          <div class="tags"><span>Next.js</span><span>TypeScript</span><span>Python</span><span>Drizzle</span><span>Neon DB</span><span>Vision AI</span></div>
         </article>
       </div>
     </div>
